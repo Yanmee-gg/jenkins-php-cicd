@@ -1,0 +1,171 @@
+pipeline {
+    agent any
+    
+    environment {
+        // Definisikan environment variables
+        PROJECT_NAME = 'Jenkins-PHP-Pipeline'
+        PHP_VERSION = 'php'
+    }
+    
+    stages {
+        stage('1. Preparation') {
+            steps {
+                echo '================================================'
+                echo '          STAGE 1: PREPARATION                  '
+                echo '================================================'
+                
+                // Bersihkan workspace (opsional)
+                cleanWs()
+                
+                echo "Project: ${env.PROJECT_NAME}"
+                echo "Build Number: ${env.BUILD_NUMBER}"
+                echo "Workspace: ${env.WORKSPACE}"
+            }
+        }
+        
+        stage('2. Checkout dari GitHub') {
+            steps {
+                echo '================================================'
+                echo '      STAGE 2: CHECKOUT CODE FROM GITHUB        '
+                echo '================================================'
+                
+                // Checkout code dari GitHub
+                checkout scm
+                
+                echo 'Kode berhasil di-checkout dari GitHub'
+                
+                // Tampilkan file yang ter-checkout
+                script {
+                    if (isUnix()) {
+                        sh 'ls -la'
+                        sh 'pwd'
+                    } else {
+                        bat 'dir'
+                        bat 'cd'
+                    }
+                }
+            }
+        }
+        
+        stage('3. Verifikasi PHP') {
+            steps {
+                echo '================================================'
+                echo '        STAGE 3: VERIFY PHP INSTALLATION        '
+                echo '================================================'
+                
+                script {
+                    if (isUnix()) {
+                        sh 'php --version'
+                    } else {
+                        bat 'php --version'
+                    }
+                }
+                
+                echo 'PHP verification completed!'
+            }
+        }
+        
+        stage('4. Display File Structure') {
+            steps {
+                echo '================================================'
+                echo '       STAGE 4: DISPLAY FILE STRUCTURE          '
+                echo '================================================'
+                
+                script {
+                    if (isUnix()) {
+                        sh '''
+                            echo "=== Directory Tree ==="
+                            find . -type f -name "*.php"
+                        '''
+                    } else {
+                        bat '''
+                            echo === PHP Files ===
+                            dir /s /b *.php
+                        '''
+                    }
+                }
+            }
+        }
+        
+        stage('5. Run Main Application') {
+            steps {
+                echo '================================================'
+                echo '      STAGE 5: RUN MAIN PHP APPLICATION         '
+                echo '================================================'
+                
+                script {
+                    if (isUnix()) {
+                        sh 'php index.php'
+                    } else {
+                        // Untuk Windows PowerShell
+                        bat 'php index.php'
+                        
+                        // Atau menggunakan PowerShell explicitly:
+                        // powershell 'php index.php'
+                    }
+                }
+            }
+        }
+        
+        stage('6. Run Additional Scripts') {
+            steps {
+                echo '================================================'
+                echo '     STAGE 6: RUN ADDITIONAL PHP SCRIPTS        '
+                echo '================================================'
+                
+                script {
+                    if (isUnix()) {
+                        sh 'php scripts/run.php'
+                    } else {
+                        bat 'php scripts/run.php'
+                        // Atau: powershell 'php scripts/run.php'
+                    }
+                }
+            }
+        }
+        
+        stage('7. Execute Individual Classes') {
+            steps {
+                echo '================================================'
+                echo '    STAGE 7: TEST INDIVIDUAL PHP CLASSES        '
+                echo '================================================'
+                
+                script {
+                    if (isUnix()) {
+                        sh '''
+                            php -r "
+                            require 'src/Calculator.php';
+                            use App\\Calculator;
+                            \\$calc = new Calculator();
+                            echo 'Quick test: 15 + 25 = ' . \\$calc->add(15, 25) . PHP_EOL;
+                            "
+                        '''
+                    } else {
+                        bat '''
+                            php -r "require 'src/Calculator.php'; use App\\Calculator; $calc = new Calculator(); echo 'Quick test: 15 + 25 = ' . $calc->add(15, 25) . PHP_EOL;"
+                        '''
+                    }
+                }
+            }
+        }
+    }
+    
+    post {
+        always {
+            echo '================================================'
+            echo '              PIPELINE COMPLETED                 '
+            echo '================================================'
+        }
+        success {
+            echo '✓ Status: SUCCESS'
+            echo "Build #${env.BUILD_NUMBER} completed successfully!"
+            
+            // Archive artifacts (optional)
+            archiveArtifacts artifacts: '**/*.php', fingerprint: true
+        }
+        failure {
+            echo '✗ Status: FAILED'
+            echo 'Pipeline mengalami error!'
+        }
+    }
+}
