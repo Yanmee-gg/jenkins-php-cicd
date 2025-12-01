@@ -2,20 +2,20 @@
 namespace App;
 
 class StringHelper {
-    public function toUpperCase($string) {
-        return strtoupper($string);
+
+    public function toUpperCase($text) {
+        return strtoupper($text);
     }
-    
-    public function toLowerCase($string) {
-        return strtolower($string);
+
+    public function toLowerCase($text) {
+        return strtolower($text);
     }
-    
-    public function reverseString($string) {
-        return strrev($string);
+
+    public function reverse($text) {
+        return strrev($text);
     }
-    
-    public function countWords($string) {
-        return str_word_count($string);
+
+    public function length($text) {
+        return strlen($text);
     }
 }
-?>

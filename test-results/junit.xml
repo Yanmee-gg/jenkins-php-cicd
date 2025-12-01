@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+  <testsuite name="C:\Users\wayan\jenkins-php-cicd\phpunit.xml" tests="10" assertions="25" errors="0" failures="0" skipped="0" time="0.005713">
+    <testsuite name="Application Test Suite" tests="10" assertions="25" errors="0" failures="0" skipped="0" time="0.005713">
+      <testsuite name="Tests\CalculatorTest" file="C:\Users\wayan\jenkins-php-cicd\tests\CalculatorTest.php" tests="6" assertions="17" errors="0" failures="0" skipped="0" time="0.005229">
+        <testcase name="testAddition" file="C:\Users\wayan\jenkins-php-cicd\tests\CalculatorTest.php" line="14" class="Tests\CalculatorTest" classname="Tests.CalculatorTest" assertions="3" time="0.004072"/>
+        <testcase name="testSubtraction" file="C:\Users\wayan\jenkins-php-cicd\tests\CalculatorTest.php" line="20" class="Tests\CalculatorTest" classname="Tests.CalculatorTest" assertions="3" time="0.000130"/>
+        <testcase name="testMultiplication" file="C:\Users\wayan\jenkins-php-cicd\tests\CalculatorTest.php" line="26" class="Tests\CalculatorTest" classname="Tests.CalculatorTest" assertions="3" time="0.000084"/>
+        <testcase name="testDivision" file="C:\Users\wayan\jenkins-php-cicd\tests\CalculatorTest.php" line="32" class="Tests\CalculatorTest" classname="Tests.CalculatorTest" assertions="3" time="0.000084"/>
+        <testcase name="testDivisionByZero" file="C:\Users\wayan\jenkins-php-cicd\tests\CalculatorTest.php" line="38" class="Tests\CalculatorTest" classname="Tests.CalculatorTest" assertions="2" time="0.000759"/>
+        <testcase name="testPower" file="C:\Users\wayan\jenkins-php-cicd\tests\CalculatorTest.php" line="44" class="Tests\CalculatorTest" classname="Tests.CalculatorTest" assertions="3" time="0.000101"/>
+      </testsuite>
+      <testsuite name="Tests\StringHelperTest" file="C:\Users\wayan\jenkins-php-cicd\tests\StringHelperTest.php" tests="4" assertions="8" errors="0" failures="0" skipped="0" time="0.000484">
+        <testcase name="testToUpperCase" file="C:\Users\wayan\jenkins-php-cicd\tests\StringHelperTest.php" line="14" class="Tests\StringHelperTest" classname="Tests.StringHelperTest" assertions="2" time="0.000275"/>
+        <testcase name="testToLowerCase" file="C:\Users\wayan\jenkins-php-cicd\tests\StringHelperTest.php" line="19" class="Tests\StringHelperTest" classname="Tests.StringHelperTest" assertions="2" time="0.000077"/>
+        <testcase name="testReverse" file="C:\Users\wayan\jenkins-php-cicd\tests\StringHelperTest.php" line="24" class="Tests\StringHelperTest" classname="Tests.StringHelperTest" assertions="2" time="0.000065"/>
+        <testcase name="testLength" file="C:\Users\wayan\jenkins-php-cicd\tests\StringHelperTest.php" line="29" class="Tests\StringHelperTest" classname="Tests.StringHelperTest" assertions="2" time="0.000066"/>
+      </testsuite>
+    </testsuite>
+  </testsuite>
+</testsuites>

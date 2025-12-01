@@ -88,24 +88,36 @@ pipeline {
         }
         
         stage('5. Run Main Application') {
-            steps {
-                echo '================================================'
-                echo '      STAGE 5: RUN MAIN PHP APPLICATION         '
-                echo '================================================'
-                
-                script {
-                    if (isUnix()) {
-                        sh 'php index.php'
-                    } else {
-                        // Untuk Windows PowerShell
-                        bat 'php index.php'
-                        
-                        // Atau menggunakan PowerShell explicitly:
-                        // powershell 'php index.php'
+    steps {
+        echo '================================================'
+        echo '  STAGE 5: RUN PHP dengan PowerShell           '
+        echo '================================================'
+
+        script {
+            if (isUnix()) {
+                sh 'php index.php'
+            } else {
+
+                powershell '''
+                    Write-Host "Menjalankan PHP di Windows..." -ForegroundColor Yellow
+
+                    try {
+                        php index.php
+                        Write-Host "PHP script berhasil dijalankan!" -ForegroundColor Green
                     }
-                }
+                    catch {
+                        Write-Host "TERJADI ERROR:" -ForegroundColor Red
+                        Write-Host $_
+                        exit 1
+                    }
+
+                    Write-Host "Selesai dijalankan pada $(Get-Date)" -ForegroundColor Cyan
+                '''
             }
         }
+    }
+}
+
         
         stage('6. Run Additional Scripts') {
             steps {
