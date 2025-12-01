@@ -1,0 +1,41 @@
+pipeline {
+    agent any
+    
+    stages {
+        stage('Checkout') {
+            steps {
+                echo '========== STAGE 1: Checkout Code =========='
+                checkout scm
+                echo 'Code berhasil di-checkout dari GitHub'
+            }
+        }
+        
+        stage('Display Info') {
+            steps {
+                echo '========== STAGE 2: Display Information =========='
+                echo "Repository: ${env.GIT_URL}"
+                echo "Branch: ${env.GIT_BRANCH}"
+                echo "Build Number: ${env.BUILD_NUMBER}"
+            }
+        }
+        
+        stage('Run PHP Script') {
+            steps {
+                echo '========== STAGE 3: Execute PHP Script =========='
+                // Untuk Windows gunakan 'bat', untuk Linux gunakan 'sh'
+                bat 'php index.php'  // Ganti dengan: sh 'php index.php' untuk Linux
+            }
+        }
+    }
+    
+    post {
+        success {
+            echo '========== PIPELINE SUCCESS =========='
+            echo 'Webhook automation berhasil dijalankan!'
+        }
+        failure {
+            echo '========== PIPELINE FAILED =========='
+            echo 'Ada error dalam pipeline!'
+        }
+    }
+}
